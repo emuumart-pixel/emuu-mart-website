@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Libre+Baskerville:wght@400;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Poppins', Inter, system-ui, sans-serif;
+  background-color: #FFF8F9;
+  --primary-color: #C0526A;
+  --primary-dark: #A03D54;
+  --secondary-color: #2D1B25;
+  --accent-color: #D4A847;
+  --blush-bg: #FFF0F3;
+  --blush-mid: #FAD7DE;
+  --text-color: #7A5560;
+  --heading-color: #2D1B25;
+}
+
+body {
+  color: var(--text-color);
+  font-size: 14px;
+  line-height: 1.7;
+  background-color: #FFF8F9;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--heading-color);
+  font-family: 'Poppins', sans-serif;
+}
+
+.font-serif-accent {
+  font-family: 'Libre Baskerville', serif;
+}
+
+/* Smooth scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FFF0F3;
+}
+::-webkit-scrollbar-thumb {
+  background: #D97589;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C0526A;
+}
+
+/* Selection color */
+::selection {
+  background-color: #FAD7DE;
+  color: #2D1B25;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+  display: flex;
+  width: max-content;
+}

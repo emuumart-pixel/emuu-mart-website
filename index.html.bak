@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>BazaarMart – Your One-Stop Shop</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+  :root {
+    --primary: #e63946;
+    --primary-dark: #c1121f;
+    --secondary: #1d3557;
+    --accent: #f4a261;
+    --bg: #f8f9fa;
+    --white: #ffffff;
+    --text: #2b2d42;
+    --text-light: #6c757d;
+    --border: #e9ecef;
+    --card-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    --card-hover: 0 8px 32px rgba(0,0,0,0.15);
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Poppins',sans-serif; background:var(--bg); color:var(--text); }
+  a { text-decoration:none; color:inherit; }
+  img { max-width:100%; }
+
+  /* ====== TOP BAR ====== */
+  .topbar {
+    background:var(--secondary);
+    color:#fff;
+    font-size:12px;
+    padding:7px 0;
+    text-align:center;
+  }
+  .topbar span { margin:0 16px; }
+  .topbar i { margin-right:5px; color:var(--accent); }
+
+  /* ====== HEADER ====== */
+  header {
+    background:#fff;
+    box-shadow:0 2px 12px rgba(0,0,0,0.08);
+    position:sticky; top:0; z-index:1000;
+  }
+  .header-inner {
+    max-width:1280px; margin:auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 24px; gap:16px;
+  }
+  .logo { display:flex; align-items:center; gap:10px; }
+  .logo-icon {
+    width:42px; height:42px; background:var(--primary);
+    border-radius:10px; display:flex; align-items:center; justify-content:center;
+    color:#fff; font-size:20px;
+  }
+  .logo-text span { display:block; }
+  .logo-name { font-size:22px; font-weight:800; color:var(--secondary); letter-spacing:-0.5px; }
+  .logo-tag { font-size:10px; color:var(--text-light); text-transform:uppercase; letter-spacing:1px; }
+
+  .search-bar {
+    flex:1; max-width:520px;
+    display:flex; border:2px solid var(--border); border-radius:50px; overflow:hidden;
+    transition:.2s;
+  }
+  .search-bar:focus-within { border-color:var(--primary); }
+  .search-bar input {
+    flex:1; border:none; outline:none; padding:10px 18px;
+    font-family:'Poppins',sans-serif; font-size:14px; color:var(--text);
+  }
+  .search-bar select {
+    border:none; border-left:1px solid var(--border); padding:10px 12px;
+    font-family:'Poppins',sans-serif; font-size:13px; color:var(--text-light);
+    background:var(--bg); cursor:pointer; outline:none;
+  }
+  .search-bar button {
+    background:var(--primary); color:#fff; border:none;
+    padding:10px 20px; cursor:pointer; font-size:15px;
+    transition:.2s;
+  }
+  .search-bar button:hover { background:var(--primary-dark); }
+
+  .header-actions { display:flex; align-items:center; gap:8px; }
+  .icon-btn {
+    position:relative; background:var(--bg); border:none; cursor:pointer;
+    width:42px; height:42px; border-radius:50%; display:flex; align-items:center;
+    justify-content:center; font-size:17px; color:var(--text);
+    transition:.2s;
+  }
+  .icon-btn:hover { background:var(--primary); color:#fff; }
+  .badge {
+    position:absolute; top:-3px; right:-3px;
+    background:var(--primary); color:#fff; font-size:10px;
+    width:18px; height:18px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-weight:700;
+  }
+
+  /* ====== NAV ====== */
+  nav {
+    background:var(--secondary); color:#fff;
+  }
+  .nav-inner {
+    max-width:1280px; margin:auto;
+    display:flex; align-items:center; gap:0;
+    padding:0 24px;
+  }
+  .all-cats {
+    background:var(--primary); padding:12px 20px;
+    display:flex; align-items:center; gap:8px;
+    font-size:14px; font-weight:600; cursor:pointer;
+    white-space:nowrap;
+  }
+  .nav-links { display:flex; }
+  .nav-links a {
+    padding:13px 16px; font-size:13.5px; font-weight:500;
+    transition:.2s; display:flex; align-items:center; gap:6px;
+    white-space:nowrap;
+  }
+  .nav-links a:hover { background:rgba(255,255,255,0.1); color:var(--accent); }
+  .nav-links a i { font-size:12px; }
+  .nav-badge {
+    background:var(--accent); color:#fff; font-size:10px;
+    padding:2px 6px; border-radius:4px; font-weight:700;
+  }
+
+  /* ====== HERO ====== */
+  .hero-section {
+    max-width:1280px; margin:24px auto; padding:0 24px;
+    display:grid; grid-template-columns:1fr 340px; gap:16px;
+  }
+  .hero-main {
+    background:linear-gradient(135deg,#1d3557 0%,#457b9d 100%);
+    border-radius:var(--radius); padding:56px 48px;
+    position:relative; overflow:hidden; min-height:340px;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .hero-main::before {
+    content:''; position:absolute; right:-60px; top:-60px;
+    width:300px; height:300px; border-radius:50%;
+    background:rgba(255,255,255,0.05);
+  }
+  .hero-main::after {
+    content:''; position:absolute; right:60px; bottom:-80px;
+    width:200px; height:200px; border-radius:50%;
+    background:rgba(244,162,97,0.15);
+  }
+  .hero-tag {
+    display:inline-block; background:var(--accent);
+    color:#fff; font-size:12px; font-weight:700;
+    padding:4px 12px; border-radius:4px; margin-bottom:16px;
+    text-transform:uppercase; letter-spacing:1px;
+  }
+  .hero-main h1 {
+    font-size:38px; font-weight:800; color:#fff;
+    line-height:1.2; margin-bottom:14px;
+  }
+  .hero-main h1 span { color:var(--accent); }
+  .hero-main p { color:rgba(255,255,255,0.75); font-size:15px; margin-bottom:28px; max-width:380px; }
+  .hero-btns { display:flex; gap:12px; flex-wrap:wrap; }
+  .btn-primary {
+    background:var(--primary); color:#fff;
+    padding:12px 28px; border-radius:50px;
+    font-weight:600; font-size:14px;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:.2s; border:none; cursor:pointer;
+  }
+  .btn-primary:hover { background:var(--primary-dark); transform:translateY(-2px); }
+  .btn-outline {
+    background:transparent; color:#fff;
+    padding:12px 28px; border-radius:50px;
+    font-weight:600; font-size:14px; border:2px solid rgba(255,255,255,0.4);
+    display:inline-flex; align-items:center; gap:8px;
+    transition:.2s; cursor:pointer;
+  }
+  .btn-outline:hover { background:rgba(255,255,255,0.1); }
+
+  .hero-side { display:flex; flex-direction:column; gap:14px; }
+  .hero-card {
+    border-radius:var(--radius); padding:24px;
+    color:#fff; flex:1;
+    display:flex; flex-direction:column; justify-content:flex-end;
+    position:relative; overflow:hidden; min-height:155px;
+  }
+  .hero-card-1 { background:linear-gradient(135deg,#e63946,#c1121f); }
+  .hero-card-2 { background:linear-gradient(135deg,#f4a261,#e76f51); }
+  .hero-card h3 { font-size:17px; font-weight:700; margin-bottom:4px; }
+  .hero-card p { font-size:12px; opacity:.85; }
+  .hero-card-icon {
+    position:absolute; right:16px; top:50%; transform:translateY(-50%);
+    font-size:52px; opacity:.2;
+  }
+
+  /* ====== SECTION TITLE ====== */
+  .section { max-width:1280px; margin:0 auto 40px; padding:0 24px; }
+  .sec-header {
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:22px;
+  }
+  .sec-title {
+    display:flex; align-items:center; gap:12px;
+  }
+  .sec-bar { width:4px; height:28px; background:var(--primary); border-radius:2px; }
+  .sec-title h2 { font-size:22px; font-weight:700; color:var(--secondary); }
+  .sec-title span { font-size:13px; color:var(--text-light); font-weight:400; margin-left:4px; }
+  .view-all {
+    color:var(--primary); font-size:13.5px; font-weight:600;
+    display:flex; align-items:center; gap:6px; cursor:pointer;
+    transition:.2s;
+  }
+  .view-all:hover { color:var(--primary-dark); }
+
+  /* ====== CATEGORIES GRID ====== */
+  .cat-grid {
+    display:grid;
+    grid-template-columns:repeat(8,1fr);
+    gap:14px;
+  }
+  .cat-card {
+    background:#fff; border-radius:var(--radius);
+    padding:20px 12px; text-align:center;
+    cursor:pointer; transition:.25s;
+    border:2px solid transparent;
+    box-shadow:var(--card-shadow);
+  }
+  .cat-card:hover {
+    border-color:var(--primary);
+    transform:translateY(-4px);
+    box-shadow:var(--card-hover);
+  }
+  .cat-card.active { border-color:var(--primary); background:#fff5f5; }
+  .cat-icon {
+    width:56px; height:56px; border-radius:50%;
+    margin:0 auto 10px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:24px;
+  }
+  .cat-card p { font-size:12px; font-weight:600; color:var(--text); }
+  .cat-card small { font-size:10px; color:var(--text-light); }
+
+  /* ====== PRODUCTS GRID ====== */
+  .products-grid {
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:18px;
+  }
+  .product-card {
+    background:#fff; border-radius:var(--radius);
+    overflow:hidden; cursor:pointer; transition:.25s;
+    box-shadow:var(--card-shadow);
+    position:relative;
+  }
+  .product-card:hover { transform:translateY(-5px); box-shadow:var(--card-hover); }
+  .product-img {
+    height:200px; background:linear-gradient(135deg,#f0f0f0,#e0e0e0);
+    display:flex; align-items:center; justify-content:center;
+    font-size:60px; position:relative; overflow:hidden;
+  }
+  .product-badge {
+    position:absolute; top:10px; left:10px;
+    background:var(--primary); color:#fff;
+    font-size:10px; font-weight:700;
+    padding:3px 8px; border-radius:4px;
+  }
+  .product-badge.new { background:#2ec4b6; }
+  .product-badge.hot { background:var(--accent); }
+  .product-wishlist {
+    position:absolute; top:10px; right:10px;
+    background:#fff; border:none; cursor:pointer;
+    width:32px; height:32px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px; color:var(--text-light);
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    transition:.2s;
+  }
+  .product-wishlist:hover { color:var(--primary); }
+  .product-info { padding:14px; }
+  .product-cat { font-size:10px; color:var(--text-light); text-transform:uppercase; letter-spacing:.5px; margin-bottom:4px; }
+  .product-name { font-size:13.5px; font-weight:600; margin-bottom:8px; line-height:1.4; }
+  .product-rating { display:flex; align-items:center; gap:4px; margin-bottom:8px; }
+  .stars { color:#ffd60a; font-size:11px; }
+  .rating-count { font-size:11px; color:var(--text-light); }
+  .product-price { display:flex; align-items:center; gap:8px; margin-bottom:12px; }
+  .price-now { font-size:17px; font-weight:800; color:var(--primary); }
+  .price-old { font-size:12px; color:var(--text-light); text-decoration:line-through; }
+  .price-save { font-size:10px; color:#2ec4b6; font-weight:600; }
+  .add-cart-btn {
+    width:100%; background:var(--secondary); color:#fff;
+    border:none; padding:10px; border-radius:var(--radius-sm);
+    font-weight:600; font-size:13px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    transition:.2s;
+  }
+  .add-cart-btn:hover { background:var(--primary); }
+
+  /* ====== PROMO BANNERS ====== */
+  .promo-grid {
+    display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px;
+  }
+  .promo-card {
+    border-radius:var(--radius); padding:28px;
+    color:#fff; position:relative; overflow:hidden;
+    min-height:140px; display:flex; flex-direction:column; justify-content:center;
+  }
+  .promo-card-1 { background:linear-gradient(135deg,#1d3557,#457b9d); }
+  .promo-card-2 { background:linear-gradient(135deg,#e63946,#c1121f); }
+  .promo-card-3 { background:linear-gradient(135deg,#2a9d8f,#264653); }
+  .promo-card h4 { font-size:13px; opacity:.8; margin-bottom:4px; text-transform:uppercase; letter-spacing:.5px; }
+  .promo-card h3 { font-size:20px; font-weight:800; margin-bottom:8px; }
+  .promo-card a {
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:13px; font-weight:600; color:#fff;
+    background:rgba(255,255,255,0.2); padding:6px 14px; border-radius:20px;
+    transition:.2s;
+  }
+  .promo-card a:hover { background:rgba(255,255,255,0.35); }
+  .promo-icon {
+    position:absolute; right:-10px; bottom:-10px;
+    font-size:80px; opacity:.1;
+  }
+
+  /* ====== FEATURES ====== */
+  .features-bar {
+    background:#fff; border-radius:var(--radius);
+    display:grid; grid-template-columns:repeat(4,1fr);
+    gap:0; box-shadow:var(--card-shadow); margin-bottom:40px;
+  }
+  .feature-item {
+    padding:24px 20px; text-align:center;
+    border-right:1px solid var(--border);
+  }
+  .feature-item:last-child { border-right:none; }
+  .feature-icon { font-size:28px; margin-bottom:10px; }
+  .feature-item h4 { font-size:14px; font-weight:700; margin-bottom:4px; color:var(--secondary); }
+  .feature-item p { font-size:12px; color:var(--text-light); }
+
+  /* ====== FOOTER ====== */
+  footer {
+    background:var(--secondary); color:#fff; margin-top:40px;
+  }
+  .footer-top {
+    max-width:1280px; margin:auto; padding:48px 24px;
+    display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:40px;
+  }
+  .footer-brand h3 { font-size:22px; font-weight:800; margin-bottom:12px; }
+  .footer-brand p { font-size:13px; opacity:.7; line-height:1.8; margin-bottom:20px; }
+  .social-links { display:flex; gap:10px; }
+  .social-links a {
+    width:36px; height:36px; border-radius:50%;
+    background:rgba(255,255,255,0.1);
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px; transition:.2s; color:#fff;
+  }
+  .social-links a:hover { background:var(--primary); }
+  .footer-col h4 { font-size:14px; font-weight:700; margin-bottom:16px; color:var(--accent); }
+  .footer-col ul { list-style:none; }
+  .footer-col ul li { margin-bottom:10px; }
+  .footer-col ul li a { font-size:13px; opacity:.7; transition:.2s; }
+  .footer-col ul li a:hover { opacity:1; color:var(--accent); }
+  .footer-bottom {
+    border-top:1px solid rgba(255,255,255,0.1);
+    text-align:center; padding:18px 24px;
+    font-size:12px; opacity:.6;
+  }
+
+  /* ====== CART SIDEBAR ====== */
+  .cart-overlay {
+    display:none; position:fixed; inset:0; z-index:2000;
+  }
+  .cart-overlay.open { display:block; }
+  .cart-bg {
+    position:absolute; inset:0; background:rgba(0,0,0,0.5);
+  }
+  .cart-panel {
+    position:absolute; right:0; top:0; bottom:0; width:380px;
+    background:#fff; display:flex; flex-direction:column;
+    box-shadow:-4px 0 30px rgba(0,0,0,0.15);
+  }
+  .cart-header {
+    padding:20px; border-bottom:1px solid var(--border);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .cart-header h3 { font-size:18px; font-weight:700; }
+  .close-btn { background:none; border:none; font-size:20px; cursor:pointer; color:var(--text-light); }
+  .close-btn:hover { color:var(--primary); }
+  .cart-items { flex:1; overflow-y:auto; padding:16px; }
+  .cart-empty { text-align:center; padding:60px 20px; color:var(--text-light); }
+  .cart-empty i { font-size:48px; margin-bottom:16px; opacity:.3; }
+  .cart-item {
+    display:flex; gap:12px; padding:12px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .cart-item-img {
+    width:60px; height:60px; background:var(--bg);
+    border-radius:8px; display:flex; align-items:center; justify-content:center;
+    font-size:28px; flex-shrink:0;
+  }
+  .cart-item-info { flex:1; }
+  .cart-item-name { font-size:13px; font-weight:600; margin-bottom:4px; }
+  .cart-item-price { font-size:14px; font-weight:700; color:var(--primary); }
+  .cart-item-qty { display:flex; align-items:center; gap:8px; margin-top:6px; }
+  .qty-btn { background:var(--bg); border:1px solid var(--border); width:24px; height:24px; border-radius:4px; cursor:pointer; font-size:14px; }
+  .qty-btn:hover { background:var(--primary); color:#fff; border-color:var(--primary); }
+  .cart-footer { padding:16px; border-top:1px solid var(--border); }
+  .cart-total { display:flex; justify-content:space-between; font-size:16px; font-weight:700; margin-bottom:14px; }
+  .checkout-btn {
+    width:100%; background:var(--primary); color:#fff;
+    border:none; padding:14px; border-radius:var(--radius-sm);
+    font-weight:700; font-size:15px; cursor:pointer; transition:.2s;
+  }
+  .checkout-btn:hover { background:var(--primary-dark); }
+
+  /* ====== CATEGORY PAGE ====== */
+  .page { display:none; }
+  .page.active { display:block; }
+  .cat-page-header {
+    max-width:1280px; margin:24px auto 20px; padding:0 24px;
+  }
+  .breadcrumb { font-size:13px; color:var(--text-light); margin-bottom:12px; }
+  .breadcrumb span { color:var(--primary); font-weight:600; }
+  .cat-page-title {
+    display:flex; align-items:center; gap:14px;
+    background:#fff; padding:20px 24px; border-radius:var(--radius);
+    box-shadow:var(--card-shadow);
+  }
+  .cat-page-icon { font-size:36px; }
+  .cat-page-title h2 { font-size:24px; font-weight:700; color:var(--secondary); }
+  .cat-page-title p { font-size:13px; color:var(--text-light); margin-top:2px; }
+  .filter-bar {
+    max-width:1280px; margin:0 auto 20px; padding:0 24px;
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  }
+  .filter-bar label { font-size:13px; font-weight:600; color:var(--text-light); }
+  .filter-btn {
+    padding:7px 16px; border:2px solid var(--border); border-radius:50px;
+    background:#fff; font-size:13px; cursor:pointer; font-family:'Poppins',sans-serif;
+    transition:.2s;
+  }
+  .filter-btn:hover, .filter-btn.active { border-color:var(--primary); color:var(--primary); }
+  .sort-select {
+    margin-left:auto; padding:8px 14px; border:2px solid var(--border);
+    border-radius:50px; font-family:'Poppins',sans-serif; font-size:13px;
+    outline:none; cursor:pointer;
+  }
+  .cat-products {
+    max-width:1280px; margin:0 auto; padding:0 24px 40px;
+  }
+
+  /* ====== PRODUCT MODAL ====== */
+  .modal-overlay {
+    display:none; position:fixed; inset:0; z-index:3000;
+    background:rgba(0,0,0,0.6); align-items:center; justify-content:center;
+  }
+  .modal-overlay.open { display:flex; }
+  .modal {
+    background:#fff; border-radius:var(--radius);
+    max-width:700px; width:90%; max-height:85vh; overflow-y:auto;
+    padding:32px; position:relative;
+  }
+  .modal-close {
+    position:absolute; top:16px; right:16px;
+    background:var(--bg); border:none; cursor:pointer;
+    width:36px; height:36px; border-radius:50%; font-size:16px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .modal-close:hover { background:var(--primary); color:#fff; }
+  .modal-grid { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+  .modal-img {
+    background:linear-gradient(135deg,#f0f0f0,#e0e0e0);
+    border-radius:var(--radius); height:280px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:80px;
+  }
+  .modal-info h2 { font-size:20px; font-weight:700; margin-bottom:8px; color:var(--secondary); }
+  .modal-price { font-size:24px; font-weight:800; color:var(--primary); margin-bottom:12px; }
+  .modal-desc { font-size:13px; color:var(--text-light); line-height:1.7; margin-bottom:16px; }
+  .modal-qty { display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+  .qty-input {
+    width:50px; text-align:center; padding:8px;
+    border:2px solid var(--border); border-radius:8px;
+    font-family:'Poppins',sans-serif; font-size:15px;
+  }
+
+  /* ====== NOTIFICATION ====== */
+  .notification {
+    position:fixed; bottom:24px; right:24px;
+    background:var(--secondary); color:#fff;
+    padding:14px 20px; border-radius:var(--radius-sm);
+    display:flex; align-items:center; gap:10px;
+    font-size:14px; font-weight:500;
+    transform:translateY(100px); opacity:0;
+    transition:.35s; z-index:9999;
+    box-shadow:0 4px 20px rgba(0,0,0,0.2);
+  }
+  .notification.show { transform:translateY(0); opacity:1; }
+  .notification i { color:var(--accent); font-size:18px; }
+
+  /* ====== RESPONSIVE ====== */
+  @media(max-width:1024px) {
+    .cat-grid { grid-template-columns:repeat(4,1fr); }
+    .products-grid { grid-template-columns:repeat(3,1fr); }
+    .promo-grid { grid-template-columns:1fr 1fr; }
+    .footer-top { grid-template-columns:1fr 1fr; }
+    .features-bar { grid-template-columns:repeat(2,1fr); }
+    .hero-section { grid-template-columns:1fr; }
+    .hero-side { flex-direction:row; }
+  }
+  @media(max-width:768px) {
+    .cat-grid { grid-template-columns:repeat(4,1fr); }
+    .products-grid { grid-template-columns:repeat(2,1fr); }
+    .nav-links { display:none; }
+    .search-bar { max-width:300px; }
+    .features-bar { grid-template-columns:1fr 1fr; }
+    .promo-grid { grid-template-columns:1fr; }
+    .footer-top { grid-template-columns:1fr 1fr; }
+    .modal-grid { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <span><i class="fas fa-shipping-fast"></i>Free Delivery on orders above ₨2,000</span>
+  <span><i class="fas fa-shield-alt"></i>100% Secure Payments</span>
+  <span><i class="fas fa-undo"></i>Easy Returns within 7 Days</span>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon"><i class="fas fa-store"></i></div>
+      <div class="logo-text">
+        <span class="logo-name">BazaarMart</span>
+        <span class="logo-tag">Your One-Stop Shop</span>
+      </div>
+    </div>
+
+    <div class="search-bar">
+      <select id="searchCat">
+        <option>All</option>
+        <option>Home Decor</option>
+        <option>Beauty</option>
+        <option>Mobile</option>
+        <option>Kitchen</option>
+        <option>Clothing</option>
+        <option>Footwear</option>
+      </select>
+      <input type="text" id="searchInput" placeholder="Search for products…"/>
+      <button onclick="doSearch()"><i class="fas fa-search"></i></button>
+    </div>
+
+    <div class="header-actions">
+      <button class="icon-btn" onclick="showPage('home')" title="Home"><i class="fas fa-home"></i></button>
+      <button class="icon-btn" title="Wishlist"><i class="far fa-heart"></i><span class="badge" id="wishCount">0</span></button>
+      <button class="icon-btn" onclick="toggleCart()" title="Cart"><i class="fas fa-shopping-cart"></i><span class="badge" id="cartCount">0</span></button>
+      <a href="admin.html" class="icon-btn" title="Admin Panel"><i class="fas fa-user-shield"></i></a>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="all-cats"><i class="fas fa-th-large"></i> All Categories</div>
+    <div class="nav-links">
+      <a href="#" onclick="filterCategory('home-decor')"><i class="fas fa-couch"></i> Home Decor</a>
+      <a href="#" onclick="filterCategory('beauty')"><i class="fas fa-spa"></i> Beauty</a>
+      <a href="#" onclick="filterCategory('mobile')"><i class="fas fa-mobile-alt"></i> Mobile Accessories</a>
+      <a href="#" onclick="filterCategory('kitchen')"><i class="fas fa-utensils"></i> Kitchen</a>
+      <a href="#" onclick="filterCategory('clothing')"><i class="fas fa-tshirt"></i> Clothing</a>
+      <a href="#" onclick="filterCategory('footwear')"><i class="fas fa-shoe-prints"></i> Footwear</a>
+      <a href="#" onclick="filterCategory('bestseller')"><i class="fas fa-fire"></i> Best Sellers <span class="nav-badge">HOT</span></a>
+    </div>
+  </div>
+</nav>
+
+<!-- =========== HOME PAGE =========== -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <div class="hero-section">
+    <div class="hero-main">
+      <span class="hero-tag">🔥 Mega Sale — Up to 60% Off</span>
+      <h1>Shop Everything<br>You <span>Love</span> — Delivered Fast</h1>
+      <p>Home Decor, Beauty, Kitchen, Mobile Accessories, Clothing & More — all in one place.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="filterCategory('bestseller')"><i class="fas fa-fire"></i> Shop Best Sellers</button>
+        <button class="btn-outline" onclick="filterCategory('home-decor')"><i class="fas fa-couch"></i> Explore Decor</button>
+      </div>
+    </div>
+    <div class="hero-side">
+      <div class="hero-card hero-card-1" onclick="filterCategory('beauty')">
+        <div class="hero-card-icon"><i class="fas fa-spa"></i></div>
+        <h3>Beauty Deals</h3>
+        <p>Up to 50% off on top picks</p>
+      </div>
+      <div class="hero-card hero-card-2" onclick="filterCategory('mobile')">
+        <div class="hero-card-icon"><i class="fas fa-mobile-alt"></i></div>
+        <h3>Mobile Accessories</h3>
+        <p>Latest gadgets & more</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES BAR -->
+  <div class="section">
+    <div class="features-bar">
+      <div class="feature-item"><div class="feature-icon">🚚</div><h4>Free Delivery</h4><p>On all orders above ₨2,000</p></div>
+      <div class="feature-item"><div class="feature-icon">🔒</div><h4>Secure Payment</h4><p>100% safe transactions</p></div>
+      <div class="feature-item"><div class="feature-icon">↩️</div><h4>Easy Returns</h4><p>7-day hassle-free returns</p></div>
+      <div class="feature-item"><div class="feature-icon">💬</div><h4>24/7 Support</h4><p>Always here to help you</p></div>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-title"><div class="sec-bar"></div><h2>Shop by Category <span>— 8 categories</span></h2></div>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-card" onclick="filterCategory('home-decor')">
+        <div class="cat-icon" style="background:#fff0f3;"><span>🛋️</span></div>
+        <p>Home Decor</p><small>120+ items</small>
+      </div>
+      <div class="cat-card" onclick="filterCategory('beauty')">
+        <div class="cat-icon" style="background:#fff5e6;"><span>💄</span></div>
+        <p>Beauty</p><small>95+ items</small>
+      </div>
+      <div class="cat-card" onclick="filterCategory('mobile')">
+        <div class="cat-icon" style="background:#e8f4fd;"><span>📱</span></div>
+        <p>Mobile Accessories</p><small>80+ items</small>
+      </div>
+      <div class="cat-card" onclick="filterCategory('bestseller')">
+        <div class="cat-icon" style="background:#fff8e1;"><span>⭐</span></div>
+        <p>Best Sellers</p><small>Top picks</small>
+      </div>
+      <div class="cat-card" onclick="filterCategory('kitchen')">
+        <div class="cat-icon" style="background:#e8fdf5;"><span>🍳</span></div>
+        <p>Kitchen</p><small>70+ items</small>
+      </div>
+      <div class="cat-card" onclick="filterCategory('clothing')">
+        <div class="cat-icon" style="background:#f3e8fd;"><span>👕</span></div>
+        <p>Clothing</p><small>150+ items</small>
+      </div>
+      <div class="cat-card" onclick="filterCategory('footwear')">
+        <div class="cat-icon" style="background:#e8f0fd;"><span>👟</span></div>
+        <p>Footwear</p><small>60+ items</small>
+      </div>
+      <div class="cat-card" onclick="filterCategory('all')">
+        <div class="cat-icon" style="background:#f0fde8;"><span>🛍️</span></div>
+        <p>View All</p><small>575+ items</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- BEST SELLERS -->
+  <div class="section" id="home-products">
+    <div class="sec-header">
+      <div class="sec-title"><div class="sec-bar"></div><h2>Best Sellers <span>— Trending Now</span></h2></div>
+      <a class="view-all" onclick="filterCategory('bestseller')">View All <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="products-grid" id="homeProductGrid"></div>
+  </div>
+
+  <!-- PROMO BANNERS -->
+  <div class="section">
+    <div class="promo-grid">
+      <div class="promo-card promo-card-1">
+        <i class="promo-icon fas fa-couch"></i>
+        <h4>Home Decor</h4>
+        <h3>Transform Your Space</h3>
+        <a href="#" onclick="filterCategory('home-decor')">Shop Now <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="promo-card promo-card-2">
+        <i class="promo-icon fas fa-spa"></i>
+        <h4>Beauty Picks</h4>
+        <h3>Glow Up This Season</h3>
+        <a href="#" onclick="filterCategory('beauty')">Shop Now <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="promo-card promo-card-3">
+        <i class="promo-icon fas fa-utensils"></i>
+        <h4>Kitchen Essentials</h4>
+        <h3>Cook Smarter</h3>
+        <a href="#" onclick="filterCategory('kitchen')">Shop Now <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEW ARRIVALS -->
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-title"><div class="sec-bar"></div><h2>New Arrivals <span>— Just Landed</span></h2></div>
+      <a class="view-all" onclick="filterCategory('all')">View All <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="products-grid" id="newArrivalsGrid"></div>
+  </div>
+
+</div>
+
+<!-- =========== CATEGORY PAGE =========== -->
+<div class="page" id="page-category">
+  <div class="cat-page-header">
+    <div class="breadcrumb">Home &rsaquo; <span id="catBreadcrumb">Category</span></div>
+    <div class="cat-page-title">
+      <span class="cat-page-icon" id="catIcon">🛍️</span>
+      <div>
+        <h2 id="catTitle">Category</h2>
+        <p id="catSubtitle">Showing all products</p>
+      </div>
+    </div>
+  </div>
+  <div class="filter-bar">
+    <label>Filter:</label>
+    <button class="filter-btn active" onclick="filterPrice('all',this)">All Prices</button>
+    <button class="filter-btn" onclick="filterPrice('low',this)">Under ₨1,500</button>
+    <button class="filter-btn" onclick="filterPrice('mid',this)">₨1,500–5,000</button>
+    <button class="filter-btn" onclick="filterPrice('high',this)">Above ₨5,000</button>
+    <select class="sort-select" onchange="sortProducts(this.value)">
+      <option value="default">Sort: Default</option>
+      <option value="low-high">Price: Low to High</option>
+      <option value="high-low">Price: High to Low</option>
+      <option value="rating">Highest Rated</option>
+    </select>
+  </div>
+  <div class="cat-products">
+    <div class="products-grid" id="catProductGrid"></div>
+  </div>
+</div>
+
+<!-- =========== CART SIDEBAR =========== -->
+<div class="cart-overlay" id="cartOverlay">
+  <div class="cart-bg" onclick="toggleCart()"></div>
+  <div class="cart-panel">
+    <div class="cart-header">
+      <h3><i class="fas fa-shopping-cart"></i> My Cart</h3>
+      <button class="close-btn" onclick="toggleCart()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">
+        <div><i class="fas fa-shopping-cart"></i></div>
+        <p>Your cart is empty</p>
+        <small>Add items to get started!</small>
+      </div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total:</span>
+        <span id="cartTotal">₨0</span>
+      </div>
+      <button class="checkout-btn" onclick="checkout()"><i class="fas fa-lock"></i> Proceed to Checkout</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    <div class="modal-grid">
+      <div class="modal-img" id="modalImg"></div>
+      <div class="modal-info">
+        <p class="product-cat" id="modalCat"></p>
+        <h2 id="modalName"></h2>
+        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count" id="modalRating"></span></div>
+        <div class="modal-price" id="modalPrice"></div>
+        <p class="modal-desc" id="modalDesc"></p>
+        <div class="modal-qty">
+          <button class="qty-btn" onclick="changeQty(-1)">-</button>
+          <input class="qty-input" type="number" id="modalQty" value="1" min="1"/>
+          <button class="qty-btn" onclick="changeQty(1)">+</button>
+        </div>
+        <button class="btn-primary" style="width:100%" onclick="addFromModal()"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NOTIFICATION -->
+<div class="notification" id="notification"><i class="fas fa-check-circle"></i><span id="notifMsg">Added to cart!</span></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <h3>🛒 BazaarMart</h3>
+      <p>Your one-stop dropshipping store for Home Decor, Beauty, Kitchen, Mobile Accessories, Clothing & Footwear. Quality products delivered fast across Pakistan.</p>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+        <a href="#"><i class="fab fa-tiktok"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Categories</h4>
+      <ul>
+        <li><a href="#" onclick="filterCategory('home-decor')">Home Decor</a></li>
+        <li><a href="#" onclick="filterCategory('beauty')">Beauty Items</a></li>
+        <li><a href="#" onclick="filterCategory('mobile')">Mobile Accessories</a></li>
+        <li><a href="#" onclick="filterCategory('kitchen')">Kitchen Accessories</a></li>
+        <li><a href="#" onclick="filterCategory('clothing')">Clothing</a></li>
+        <li><a href="#" onclick="filterCategory('footwear')">Footwear</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Track Order</a></li>
+        <li><a href="#">FAQs</a></li>
+        <li><a href="admin.html">Admin Panel</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Policies</h4>
+      <ul>
+        <li><a href="#">Return Policy</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Shipping Policy</a></li>
+        <li><a href="#">Terms & Conditions</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2026 BazaarMart. All rights reserved. | Designed for Dropshipping Excellence
+  </div>
+</footer>
+
+<script>
+// ====== PRODUCT DATA ======
+const products = [
+  // HOME DECOR
+  {id:1,name:"Aesthetic Wall Clock – Nordic Minimalist",cat:"home-decor",emoji:"🕐",price:1899,oldPrice:3500,rating:4.5,reviews:128,badge:"Sale",desc:"Premium Nordic-style silent wall clock, perfect for living rooms & bedrooms."},
+  {id:2,name:"Decorative Macramé Wall Hanging",cat:"home-decor",emoji:"🎨",price:1299,oldPrice:2500,rating:4.3,reviews:87,badge:"New",desc:"Handcrafted bohemian macramé wall art, adds warmth to any room."},
+  {id:3,name:"Scented Candle Set – Lavender & Vanilla",cat:"home-decor",emoji:"🕯️",price:899,oldPrice:1800,rating:4.7,reviews:214,badge:"Hot",desc:"Luxurious soy wax candles with calming lavender & warm vanilla scent."},
+  {id:4,name:"Ceramic Flower Vase Set (3 pcs)",cat:"home-decor",emoji:"🏺",price:2199,oldPrice:4000,rating:4.4,reviews:63,badge:"Sale",desc:"Elegant matte ceramic vase trio — white, beige & sage green."},
+  {id:5,name:"Fairy Lights – 10M Warm White",cat:"home-decor",emoji:"✨",price:750,oldPrice:1500,rating:4.6,reviews:341,badge:"Hot",desc:"Waterproof copper wire fairy lights with USB plug, perfect for décor."},
+  {id:6,name:"Wooden Photo Frame Set (6 pcs)",cat:"home-decor",emoji:"🖼️",price:1500,oldPrice:2800,rating:4.2,reviews:95,badge:"Sale",desc:"Rustic wood-finish photo frames in multiple sizes for gallery walls."},
+  // BEAUTY
+  {id:7,name:"Vitamin C Face Serum – Brightening",cat:"beauty",emoji:"🌟",price:1499,oldPrice:2999,rating:4.8,reviews:412,badge:"Best",desc:"Powerful Vitamin C serum that brightens skin, reduces dark spots & boosts glow."},
+  {id:8,name:"Rose Water Facial Mist – 200ml",cat:"beauty",emoji:"🌹",price:799,oldPrice:1500,rating:4.5,reviews:183,badge:"New",desc:"100% pure rose water toner mist for hydrated, fresh-looking skin."},
+  {id:9,name:"Retinol Anti-Aging Night Cream",cat:"beauty",emoji:"🌙",price:2299,oldPrice:4500,rating:4.7,reviews:267,badge:"Sale",desc:"Clinically proven retinol formula that reduces wrinkles while you sleep."},
+  {id:10,name:"Eyebrow Lamination Kit",cat:"beauty",emoji:"💆",price:1199,oldPrice:2200,rating:4.4,reviews:92,badge:"Hot",desc:"At-home brow lamination kit for bold, defined brows that last 6 weeks."},
+  {id:11,name:"Matte Liquid Lipstick Set (12 shades)",cat:"beauty",emoji:"💄",price:1650,oldPrice:3200,rating:4.6,reviews:321,badge:"Sale",desc:"Long-lasting, transfer-proof matte lipsticks in 12 gorgeous shades."},
+  {id:12,name:"Hair Growth Serum – Biotin Formula",cat:"beauty",emoji:"💇",price:1899,oldPrice:3500,rating:4.5,reviews:156,badge:"New",desc:"Stimulates follicles, reduces hair fall, and promotes thick, healthy growth."},
+  // MOBILE ACCESSORIES
+  {id:13,name:"MagSafe Wireless Charger – 15W",cat:"mobile",emoji:"⚡",price:2499,oldPrice:4500,rating:4.6,reviews:234,badge:"Hot",desc:"Fast 15W magnetic wireless charger, compatible with iPhone 12–16 series."},
+  {id:14,name:"Transparent Phone Case – Shockproof",cat:"mobile",emoji:"📱",price:499,oldPrice:999,rating:4.3,reviews:507,badge:"Sale",desc:"Military-grade shockproof transparent case with anti-yellowing technology."},
+  {id:15,name:"Bluetooth Earbuds – 40Hr Battery",cat:"mobile",emoji:"🎧",price:3999,oldPrice:7500,rating:4.7,reviews:189,badge:"Best",desc:"True wireless earbuds with ANC, 40-hour total battery & premium sound."},
+  {id:16,name:"Phone Ring Stand – Magnetic",cat:"mobile",emoji:"💍",price:399,oldPrice:799,rating:4.4,reviews:623,badge:"Hot",desc:"360° rotating ring stand with magnetic pop socket for secure grip & desk stand."},
+  {id:17,name:"Car Phone Holder – Dashboard Mount",cat:"mobile",emoji:"🚗",price:899,oldPrice:1800,rating:4.5,reviews:287,badge:"Sale",desc:"Universal suction cup dashboard mount with one-touch release mechanism."},
+  {id:18,name:"USB-C Fast Charging Cable – 2M",cat:"mobile",emoji:"🔌",price:599,oldPrice:1200,rating:4.2,reviews:412,badge:"New",desc:"Braided nylon 65W fast charging cable with durable zinc alloy connectors."},
+  // KITCHEN
+  {id:19,name:"Air Fryer – 5L Digital Display",cat:"kitchen",emoji:"🍟",price:8999,oldPrice:15000,rating:4.8,reviews:156,badge:"Best",desc:"Digital 5L air fryer with 8 preset modes, 80% less oil, 360° hot air."},
+  {id:20,name:"Knife Set – 6 Piece Stainless Steel",cat:"kitchen",emoji:"🔪",price:2999,oldPrice:5500,rating:4.6,reviews:98,badge:"Sale",desc:"Professional chef knife set with ergonomic handles and wooden block."},
+  {id:21,name:"Silicone Cooking Utensil Set – 7pcs",cat:"kitchen",emoji:"🥄",price:1299,oldPrice:2500,rating:4.4,reviews:174,badge:"New",desc:"Heat-resistant non-stick silicone spatula & utensil set, dishwasher safe."},
+  {id:22,name:"Glass Food Storage Containers (10 pcs)",cat:"kitchen",emoji:"🥡",price:2499,oldPrice:4500,rating:4.7,reviews:213,badge:"Hot",desc:"Airtight borosilicate glass containers — microwave, oven & freezer safe."},
+  {id:23,name:"Coffee Grinder – Electric Burr",cat:"kitchen",emoji:"☕",price:4500,oldPrice:8000,rating:4.5,reviews:67,badge:"Sale",desc:"Conical burr grinder with 18 grind settings for espresso to French press."},
+  {id:24,name:"Non-Stick Fry Pan – 26cm",cat:"kitchen",emoji:"🍳",price:1799,oldPrice:3200,rating:4.3,reviews:289,badge:"New",desc:"Marble-coated non-stick fry pan, PFOA-free, induction compatible."},
+  // CLOTHING
+  {id:25,name:"Oversized Graphic Hoodie – Unisex",cat:"clothing",emoji:"👕",price:2499,oldPrice:4500,rating:4.6,reviews:342,badge:"Hot",desc:"Premium fleece oversized hoodie with bold graphic print — streetwear essential."},
+  {id:26,name:"Cargo Pants – Multi Pocket",cat:"clothing",emoji:"👖",price:3299,oldPrice:6000,rating:4.5,reviews:156,badge:"New",desc:"Y2K inspired wide-leg cargo pants with 8 pockets — available in 5 colors."},
+  {id:27,name:"Summer Floral Dress – Midi Length",cat:"clothing",emoji:"👗",price:2199,oldPrice:4000,rating:4.7,reviews:228,badge:"Sale",desc:"Flowy chiffon midi dress with delicate floral print, perfect for summer."},
+  {id:28,name:"Essential Cotton T-Shirt Pack (3 pcs)",cat:"clothing",emoji:"🧵",price:1499,oldPrice:2800,rating:4.4,reviews:467,badge:"Best",desc:"100% organic cotton plain tees in classic white, black & grey — everyday essential."},
+  {id:29,name:"Puffer Jacket – Lightweight",cat:"clothing",emoji:"🧥",price:5499,oldPrice:9500,rating:4.8,reviews:134,badge:"New",desc:"Ultra-lightweight puffer jacket, packable into own pocket, windproof & warm."},
+  {id:30,name:"Denim Jacket – Washed Classic",cat:"clothing",emoji:"🪡",price:4299,oldPrice:7500,rating:4.5,reviews:89,badge:"Sale",desc:"Vintage washed denim jacket with distressed detailing — timeless wardrobe staple."},
+  // FOOTWEAR
+  {id:31,name:"Chunky Platform Sneakers",cat:"footwear",emoji:"👟",price:4999,oldPrice:9000,rating:4.7,reviews:213,badge:"Hot",desc:"90s-inspired chunky platform sneakers with premium rubber sole & cushioning."},
+  {id:32,name:"Leather Loafers – Classic Slip-On",cat:"footwear",emoji:"🥿",price:5499,oldPrice:9500,rating:4.6,reviews:145,badge:"Best",desc:"Genuine leather loafers with memory foam insole for all-day comfort."},
+  {id:33,name:"Sports Running Shoes – Lightweight",cat:"footwear",emoji:"🏃",price:3999,oldPrice:7000,rating:4.8,reviews:312,badge:"Sale",desc:"Breathable mesh running shoes with responsive foam cushioning & grip sole."},
+  {id:34,name:"Ankle Boots – Suede Block Heel",cat:"footwear",emoji:"👢",price:6299,oldPrice:11000,rating:4.5,reviews:87,badge:"New",desc:"Faux suede ankle boots with 5cm block heel — elegant and comfortable."},
+  {id:35,name:"Casual Sliders – Foam Comfort",cat:"footwear",emoji:"🩴",price:1299,oldPrice:2500,rating:4.3,reviews:534,badge:"Hot",desc:"Ultra-soft foam sliders with arch support — perfect for home or beach."},
+  {id:36,name:"Formal Oxford Shoes – Leather",cat:"footwear",emoji:"👞",price:7999,oldPrice:14000,rating:4.7,reviews:98,badge:"Best",desc:"Hand-stitched genuine leather oxford shoes with leather sole & cushioning."},
+];
+
+// ====== STATE ======
+let cart = JSON.parse(localStorage.getItem('bm_cart')||'[]');
+let currentCat = 'all';
+let currentModal = null;
+let priceFilter = 'all';
+let sortMode = 'default';
+
+// ====== RENDER ======
+function renderCard(p) {
+  const disc = p.oldPrice ? Math.round((1-p.price/p.oldPrice)*100) : 0;
+  const stars = '★'.repeat(Math.floor(p.rating))+'☆'.repeat(5-Math.floor(p.rating));
+  return `<div class="product-card" onclick="openModal(${p.id})">
+    <div class="product-img">
+      <span>${p.emoji}</span>
+      ${p.badge?`<span class="product-badge ${p.badge==='New'?'new':p.badge==='Hot'?'hot':''}">${p.badge}</span>`:''}
+      <button class="product-wishlist" onclick="event.stopPropagation();wishItem(this)"><i class="far fa-heart"></i></button>
+    </div>
+    <div class="product-info">
+      <p class="product-cat">${p.cat.replace(/-/g,' ')}</p>
+      <p class="product-name">${p.name}</p>
+      <div class="product-rating"><span class="stars">${stars}</span><span class="rating-count">(${p.reviews})</span></div>
+      <div class="product-price">
+        <span class="price-now">₨${p.price.toLocaleString()}</span>
+        ${p.oldPrice?`<span class="price-old">₨${p.oldPrice.toLocaleString()}</span><span class="price-save">${disc}% off</span>`:''}
+      </div>
+      <button class="add-cart-btn" onclick="event.stopPropagation();addToCart(${p.id})">
+        <i class="fas fa-cart-plus"></i> Add to Cart
+      </button>
+    </div>
+  </div>`;
+}
+
+function renderGrid(containerId, items) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  el.innerHTML = items.length ? items.map(renderCard).join('') : '<p style="color:var(--text-light);grid-column:1/-1;text-align:center;padding:40px">No products found.</p>';
+}
+
+// ====== INIT HOME ======
+function initHome() {
+  const sellers = products.filter(p=>['best','hot'].includes((p.badge||'').toLowerCase())).slice(0,5);
+  const arrivals = products.filter(p=>p.badge==='New').slice(0,5);
+  renderGrid('homeProductGrid', sellers);
+  renderGrid('newArrivalsGrid', arrivals);
+}
+
+// ====== FILTER CATEGORY ======
+const catMeta = {
+  'all':{title:'All Products',icon:'🛍️',sub:'Showing all items'},
+  'home-decor':{title:'Home Decor',icon:'🛋️',sub:'Transform your living space'},
+  'beauty':{title:'Beauty Items',icon:'💄',sub:'Glow up with premium picks'},
+  'mobile':{title:'Mobile Accessories',icon:'📱',sub:'Latest gadgets & accessories'},
+  'bestseller':{title:'Best Sellers',icon:'⭐',sub:'Our most loved products'},
+  'kitchen':{title:'Kitchen Accessories',icon:'🍳',sub:'Cook smarter every day'},
+  'clothing':{title:'Clothing',icon:'👕',sub:'Style for every occasion'},
+  'footwear':{title:'Footwear',icon:'👟',sub:'Step in comfort & style'},
+};
+
+function filterCategory(cat) {
+  currentCat = cat;
+  priceFilter = 'all';
+  sortMode = 'default';
+  showPage('category');
+  const meta = catMeta[cat]||catMeta['all'];
+  document.getElementById('catBreadcrumb').textContent = meta.title;
+  document.getElementById('catTitle').textContent = meta.title;
+  document.getElementById('catSubtitle').textContent = meta.sub;
+  document.getElementById('catIcon').textContent = meta.icon;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector('.filter-btn').classList.add('active');
+  applyFilters();
+}
+
+function applyFilters() {
+  let items = cat => currentCat==='all'||currentCat==='bestseller'
+    ? (currentCat==='bestseller' ? products.filter(p=>['best','hot'].includes((p.badge||'').toLowerCase())) : products)
+    : products.filter(p=>p.cat===currentCat);
+  let filtered = items();
+  if (priceFilter==='low') filtered = filtered.filter(p=>p.price<1500);
+  else if (priceFilter==='mid') filtered = filtered.filter(p=>p.price>=1500&&p.price<=5000);
+  else if (priceFilter==='high') filtered = filtered.filter(p=>p.price>5000);
+  if (sortMode==='low-high') filtered.sort((a,b)=>a.price-b.price);
+  else if (sortMode==='high-low') filtered.sort((a,b)=>b.price-a.price);
+  else if (sortMode==='rating') filtered.sort((a,b)=>b.rating-a.rating);
+  document.getElementById('catSubtitle').textContent = `${filtered.length} products found`;
+  renderGrid('catProductGrid', filtered);
+}
+
+function filterPrice(mode, btn) {
+  priceFilter = mode;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
+function sortProducts(val) { sortMode = val; applyFilters(); }
+
+// ====== PAGE NAV ======
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ====== CART ======
+function addToCart(id) {
+  const p = products.find(x=>x.id===id);
+  const ex = cart.find(x=>x.id===id);
+  if (ex) ex.qty++;
+  else cart.push({...p, qty:1});
+  saveCart(); renderCart(); notify('✅ '+p.name.substring(0,30)+'… added to cart!');
+}
+function saveCart() {
+  localStorage.setItem('bm_cart', JSON.stringify(cart));
+  document.getElementById('cartCount').textContent = cart.reduce((s,i)=>s+i.qty,0);
+}
+function renderCart() {
+  const el = document.getElementById('cartItems');
+  if (!cart.length) {
+    el.innerHTML = '<div class="cart-empty"><div><i class="fas fa-shopping-cart"></i></div><p>Your cart is empty</p><small>Add items to get started!</small></div>';
+    document.getElementById('cartTotal').textContent = '₨0';
+    return;
+  }
+  el.innerHTML = cart.map(item=>`<div class="cart-item">
+    <div class="cart-item-img">${item.emoji}</div>
+    <div class="cart-item-info">
+      <p class="cart-item-name">${item.name.substring(0,40)}</p>
+      <p class="cart-item-price">₨${(item.price*item.qty).toLocaleString()}</p>
+      <div class="cart-item-qty">
+        <button class="qty-btn" onclick="updateQty(${item.id},-1)">-</button>
+        <span>${item.qty}</span>
+        <button class="qty-btn" onclick="updateQty(${item.id},1)">+</button>
+        <button class="qty-btn" style="color:red" onclick="removeItem(${item.id})"><i class="fas fa-trash"></i></button>
+      </div>
+    </div>
+  </div>`).join('');
+  const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  document.getElementById('cartTotal').textContent = '₨'+total.toLocaleString();
+}
+function updateQty(id, d) {
+  const item = cart.find(x=>x.id===id);
+  if (item) { item.qty+=d; if(item.qty<1) cart=cart.filter(x=>x.id!==id); }
+  saveCart(); renderCart();
+}
+function removeItem(id) { cart=cart.filter(x=>x.id!==id); saveCart(); renderCart(); }
+function toggleCart() { document.getElementById('cartOverlay').classList.toggle('open'); }
+function checkout() { notify('🎉 Proceeding to checkout! (Connect your payment gateway here)'); toggleCart(); }
+
+// ====== MODAL ======
+function openModal(id) {
+  currentModal = products.find(p=>p.id===id);
+  const p = currentModal;
+  document.getElementById('modalImg').textContent = p.emoji;
+  document.getElementById('modalCat').textContent = p.cat.replace(/-/g,' ');
+  document.getElementById('modalName').textContent = p.name;
+  document.getElementById('modalRating').textContent = `${p.rating} (${p.reviews} reviews)`;
+  document.getElementById('modalPrice').textContent = '₨'+p.price.toLocaleString();
+  document.getElementById('modalDesc').textContent = p.desc;
+  document.getElementById('modalQty').value = 1;
+  document.getElementById('productModal').classList.add('open');
+}
+function closeModal() { document.getElementById('productModal').classList.remove('open'); }
+function changeQty(d) {
+  const el = document.getElementById('modalQty');
+  el.value = Math.max(1, parseInt(el.value)+d);
+}
+function addFromModal() {
+  if (!currentModal) return;
+  const qty = parseInt(document.getElementById('modalQty').value);
+  const ex = cart.find(x=>x.id===currentModal.id);
+  if (ex) ex.qty+=qty; else cart.push({...currentModal, qty});
+  saveCart(); renderCart(); closeModal();
+  notify('✅ Added '+qty+' × '+currentModal.name.substring(0,25)+'…');
+}
+
+// ====== SEARCH ======
+function doSearch() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const cat = document.getElementById('searchCat').value;
+  if (!q) return;
+  let results = products.filter(p=>p.name.toLowerCase().includes(q)||p.desc.toLowerCase().includes(q));
+  if (cat!=='All') results = results.filter(p=>p.cat===cat.toLowerCase().replace(' ','-'));
+  currentCat = 'all';
+  showPage('category');
+  document.getElementById('catTitle').textContent = `Search: "${q}"`;
+  document.getElementById('catBreadcrumb').textContent = 'Search Results';
+  document.getElementById('catIcon').textContent = '🔍';
+  document.getElementById('catSubtitle').textContent = results.length+' results';
+  renderGrid('catProductGrid', results);
+}
+document.getElementById('searchInput').addEventListener('keydown', e=>{ if(e.key==='Enter') doSearch(); });
+
+// ====== WISHLIST ======
+function wishItem(btn) {
+  const i = btn.querySelector('i');
+  if (i.classList.contains('far')) {
+    i.classList.replace('far','fas'); btn.style.color='var(--primary)';
+    const n = parseInt(document.getElementById('wishCount').textContent)+1;
+    document.getElementById('wishCount').textContent = n;
+    notify('❤️ Added to Wishlist!');
+  } else {
+    i.classList.replace('fas','far'); btn.style.color='';
+    const n = Math.max(0, parseInt(document.getElementById('wishCount').textContent)-1);
+    document.getElementById('wishCount').textContent = n;
+  }
+}
+
+// ====== NOTIFY ======
+function notify(msg) {
+  const el = document.getElementById('notification');
+  document.getElementById('notifMsg').textContent = msg;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), 3000);
+}
+
+// ====== INIT ======
+initHome();
+saveCart();
+renderCart();
+</script>
+</body>
+</html>

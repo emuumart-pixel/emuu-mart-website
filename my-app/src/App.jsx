@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import { useProductStore } from './store/useProductStore';
 
 import TopBar from './components/layout/TopBar';
 import Header from './components/layout/Header';
@@ -22,6 +24,12 @@ import AdminLayout from './pages/admin/AdminLayout';
 const NotFound = () => <div className="min-h-[60vh] flex items-center justify-center font-bold text-4xl text-gray-400">404 - Not Found</div>;
 
 function App() {
+  const fetchProducts = useProductStore((state) => state.fetchProducts);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
+
   return (
     <Router>
       <Toaster position="bottom-right" toastOptions={{

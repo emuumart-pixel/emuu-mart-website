@@ -1,79 +1,107 @@
 import { create } from 'zustand';
-
-const dummyOrders = [
-  {
-    id: 'EM-1718000000001',
-    date: new Date().toISOString(),
-    status: 'pending',
-    customer: { name: 'Ali Khan', email: 'ali@example.com', phone: '03001234567', address: 'DHA Phase 5, Lahore' },
-    items: [{ name: 'Wireless Earbuds', quantity: 1, price: 5000, emoji: '🎧' }],
-    subtotal: 5000,
-    deliveryFee: 200,
-    total: 5200,
-    paymentMethod: 'Cash on Delivery'
-  },
-  {
-    id: 'EM-1718000000002',
-    date: new Date(Date.now() - 86400000).toISOString(),
-    status: 'delivered',
-    customer: { name: 'Sara Ahmed', email: 'sara@example.com', phone: '03219876543', address: 'Clifton, Karachi' },
-    items: [{ name: 'Smart Watch', quantity: 1, price: 8500, emoji: '⌚' }],
-    subtotal: 8500,
-    deliveryFee: 0,
-    total: 8500,
-    paymentMethod: 'Credit Card'
-  }
-];
-
-const loadOrders = () => {
-  try {
-    const orders = JSON.parse(localStorage.getItem('em_orders'));
-    if (!orders || orders.length === 0) {
-      localStorage.setItem('em_orders', JSON.stringify(dummyOrders));
-      return dummyOrders;
-    }
-    return orders;
-  } catch {
-    return dummyOrders;
-  }
-};
-
-const saveOrders = (orders) => {
-  localStorage.setItem('em_orders', JSON.stringify(orders));
-};
+import { supabase } from '../lib/supabaseClient';
 
 export const useOrderStore = create((set, get) => ({
-  orders: loadOrders(),
+  orders: [],
+  loading: false,
+  error: null,
 
-  addOrder: (orderData) => {
-    const newOrder = {
-      id: `EM-${Date.now()}`,
-      date: new Date().toISOString(),
+  // Fetch all orders from Supabase
+  fetchOrders: async () => {
+    set({ loading: true, error: null });
+    const { data, error } = await supabase
+      .from('orders')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching orders:', error);
+      set({ loading: false, error: error.message });
+    } else {
+      // Normalize field names for compatibility with existing UI
+      const normalized = (data || []).map(o => ({
+        ...o,
+        date: o.created_at,
+        deliveryFee: o.delivery_fee,
+        paymentMethod: o.payment_method,
+      }));
+      set({ orders: normalized, loading: false });
+    }
+  },
+
+  // Place a new order — called from CheckoutPage
+  addOrder: async (orderData) => {
+    const orderId = `EM-${Date.now()}`;
+
+    const insertData = {
+      id: orderId,
+      customer: orderData.customer,
+      items: orderData.items,
+      subtotal: orderData.subtotal,
+      delivery_fee: orderData.deliveryFee || 200,
+      total: orderData.total,
       status: 'pending',
-      ...orderData,
+      payment_method: orderData.paymentMethod || 'Cash on Delivery',
     };
-    set((state) => {
-      const newOrders = [newOrder, ...state.orders];
-      saveOrders(newOrders);
-      return { orders: newOrders };
-    });
-    return newOrder.id;
+
+    const { data, error } = await supabase
+      .from('orders')
+      .insert([insertData])
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error placing order:', error);
+      throw error;
+    }
+
+    const newOrder = {
+      ...data,
+      date: data.created_at,
+      deliveryFee: data.delivery_fee,
+      paymentMethod: data.payment_method,
+    };
+
+    set(state => ({ orders: [newOrder, ...state.orders] }));
+    return orderId;
   },
 
-  updateStatus: (id, status) => {
-    set((state) => {
-      const newOrders = state.orders.map(o => o.id === id ? { ...o, status } : o);
-      saveOrders(newOrders);
-      return { orders: newOrders };
-    });
+  // Update order status (admin use)
+  updateStatus: async (id, status) => {
+    const { data, error } = await supabase
+      .from('orders')
+      .update({ status })
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error updating status:', error);
+      throw error;
+    }
+
+    set(state => ({
+      orders: state.orders.map(o =>
+        o.id === id ? { ...o, status: data.status } : o
+      )
+    }));
   },
 
-  deleteOrder: (id) => {
-    set((state) => {
-      const newOrders = state.orders.filter(o => o.id !== id);
-      saveOrders(newOrders);
-      return { orders: newOrders };
-    });
+  // Delete an order (admin use)
+  deleteOrder: async (id) => {
+    const { error } = await supabase
+      .from('orders')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      console.error('Error deleting order:', error);
+      throw error;
+    }
+
+    set(state => ({
+      orders: state.orders.filter(o => o.id !== id)
+    }));
   },
 
   getOrderById: (id) => get().orders.find(o => o.id === id),

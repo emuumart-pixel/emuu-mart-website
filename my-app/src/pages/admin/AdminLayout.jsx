@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import AdminSidebar from '../../components/admin/AdminSidebar';
 import AdminTopBar from '../../components/admin/AdminTopBar';
@@ -8,6 +8,7 @@ import OrdersPage from './OrdersPage';
 import LoginPage from './LoginPage';
 import MessagesPage from './MessagesPage';
 import { useAuthStore } from '../../store/useAuthStore';
+import { useOrderStore } from '../../store/useOrderStore';
 
 const CustomersPage = () => (
   <div className="p-8">
@@ -22,6 +23,13 @@ const CustomersPage = () => (
 
 const AdminLayout = () => {
   const isAuthenticated = useAuthStore(state => state.isAuthenticated);
+  const fetchOrders = useOrderStore(state => state.fetchOrders);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchOrders();
+    }
+  }, [isAuthenticated, fetchOrders]);
 
   if (!isAuthenticated) {
     return <LoginPage />;

@@ -51,24 +51,28 @@ const CheckoutPage = () => {
     }
   };
 
-  const handlePlaceOrder = () => {
-    const orderId = addOrder({
-      customer: {
-        name: formData.name,
-        phone: formData.phone,
-        email: formData.email,
-        address: `${formData.address}, ${formData.city}, ${formData.province}`,
-        city: formData.city,
-      },
-      items: items.map(i => ({ id: i.id, name: i.name, price: i.price, quantity: i.qty || i.quantity || 1, emoji: i.emoji, size: i.size })),
-      subtotal: subtotal,
-      deliveryFee: DELIVERY_FEE,
-      total: total,
-      paymentMethod: 'Cash on Delivery',
-    });
-    clearCart();
-    setStep(4);
-    toast.success('Order placed successfully! 🎉');
+  const handlePlaceOrder = async () => {
+    try {
+      const orderId = await addOrder({
+        customer: {
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          address: `${formData.address}, ${formData.city}, ${formData.province}`,
+          city: formData.city,
+        },
+        items: items.map(i => ({ id: i.id, name: i.name, price: i.price, quantity: i.qty || i.quantity || 1, emoji: i.emoji, size: i.size })),
+        subtotal: subtotal,
+        deliveryFee: DELIVERY_FEE,
+        total: total,
+        paymentMethod: 'Cash on Delivery',
+      });
+      clearCart();
+      setStep(4);
+      toast.success('Order placed successfully! 🎉');
+    } catch (error) {
+      toast.error('Failed to place order. Please try again.');
+    }
   };
 
   if (step === 4) {
